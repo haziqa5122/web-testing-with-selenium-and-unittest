@@ -22,7 +22,7 @@ ACCESS_KEY=<your_access_key>
 All tests are defined in the `unitest_with_selenium.py` file. Run all tests using the following command.
 
 ```bash
-python -m unitest unitest_with_selenium.py
+python -m unittest unitest_with_selenium.py
 ```
 
 ## Monitoring on LambdaTest
