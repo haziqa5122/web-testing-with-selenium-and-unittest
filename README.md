@@ -19,11 +19,18 @@ ACCESS_KEY=<your_access_key>
 ```
 
 ## Run Tests
-All tests are defined in the `unitest_with_selenium.py` file. Run all tests using the following command.
+All tests are defined in the `unittest_with_selenium.py` file. Run all tests using the following command.
 
 ```bash
-python -m unittest unitest_with_selenium.py
+python -m unittest unittest_with_selenium.py
 ```
+
+## Run Tests in Parallel
+
+```bash
+python parallel_runner.py
+```
+
 
 ## Monitoring on LambdaTest
 The test are configured to be executed using the [LambdaTest](https://www.lambdatest.com/) platform. You can monitor all the tests on the dashboard.
