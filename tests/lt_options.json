@@ -1,0 +1,15 @@
+{
+    "build": "Build: Python Unittest Demo",
+    "project": "Project: Python Unittest Demo",
+    "name": "Test: Python Unittest Demo",
+    "w3c" : true,
+    "selenium_version" : "latest",
+    "plugin": "python-python",
+    "platform": "Windows 11",
+    "browserName": "Chrome",
+    "version": "latest",
+    "visual": false,
+    "network": true,
+    "console": true,
+    "video": true
+}

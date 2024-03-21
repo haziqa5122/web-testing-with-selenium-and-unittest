@@ -1,7 +1,0 @@
-{
-    "build" : "UnitTest-with-Selenium",
-    "project": "UnitTest-with-Selenium",
-    "w3c" : true,
-    "selenium_version" : "4.13.0",
-    "plugin": "python-python"
-}
