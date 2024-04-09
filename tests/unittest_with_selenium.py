@@ -17,35 +17,33 @@ from pyunitsetup import PyUnitTestSetup
 
 '''XPATHS and Full XPATH Variables'''
 
-#Test:1 - test_login Xpaths
-Login_XPATH = """//*[@id="widget-navbar-217834"]/ul/li[6]/a"""
+#Test:1 - test_login selectors
+Login_Selector = """#widget-navbar-217834 > ul > li:nth-child(6) > a > div > span"""
 # Login_Submit_XPATH ="""//*[@id="content"]/div/div[2]/div/div/form/input[1]"""
 Login_Submit_locator = "[value='Login']"
+Login_Success_Selector = """#content > div:nth-child(1) > h2"""
+#Test:2 - test_logout selectors
+Logout_Selector = """#column-right > div > a:nth-child(14)"""
+Logout_Success_Selector = """#content > h1"""
 
-Login_Success_XPATH = """//*[@id="content"]/div[1]/h2"""
-
-#Test:2 - test_logout Xpaths
-Logout_XPATH = """//*[@id="column-right"]/div/a[14]"""
-Logout_Success_XPATH = """//*[@id="content"]/h1"""
-
-#Test:3 - test_cart_badge_update XPaths
-Nav_to_Home_XPATH = """//*[@id="widget-navbar-217834"]/ul/li[1]/a"""
+#Test:3 - test_cart_badge_update Selectors
+Nav_to_Home_Selector = """#widget-navbar-217834 > ul > li:nth-child(1) > a > div"""
 Buttons_XPATH = """/html/body/div[1]/div[5]/div[1]/div[7]/div/div[2]/div/div[2]/div/div[1]/div/div/div[1]"""
 Quick_View_XPATH = """/html/body/div[1]/div[5]/div[1]/div[7]/div/div[2]/div/div[2]/div/div[1]/div/div/div[1]/div/div[1]/div[2]"""
 Add_to_Cart_XPATH = Quick_View_XPATH+"/button[1]"
 # Cart_badge_XPATH =  """/html/body/div[1]/div[5]/header/div[2]/div[1]/div[5]/a/div[1]/span"""
-Cart_bridge_locator = "span.badge.badge-pill.badge-info.cart-item-total"
+Cart_badge_locator = "span.badge.badge-pill.badge-info.cart-item-total"
 
 #Test:4 - test_add_to_cart_functionality XPaths
 #Also uses previous tests xpaths
-Close_Notification_XPATH = """/html/body/div[2]/div/div[1]/button/span"""
-Cart_Button_XPATH = """/html/body/div[1]/div[5]/header/div[2]/div[1]/div[5]/a/div[1]/div"""
-Cart_Element_Item_XPATH = """/html/body/div[1]/div[3]/div/div[1]/div/table/tbody/tr/td[2]/a"""
+Close_Notification_Selector = """#notification-box-top > div > div.toast-header > button > span"""
+Cart_Button_Selector = """#entry_217825 > a > div.cart-icon > div > svg"""
+Cart_Element_Item_Selector = """#entry_217847 > div > table > tbody > tr > td:nth-child(2) > a"""
 
 #Test:5 - test_continue_shopping XPaths
-Edit_Cart_XPATH = """/html/body/div[1]/div[3]/div/div[2]/div/div[1]/a"""
-Continue_Shopping_XPATH = """/html/body/div[1]/div[5]/div[1]/div/div/div[2]/a[1]"""
-Home_Title_XPATH = """/html/body/div[1]/div[5]/div[1]/div[3]/div/div[1]/h3"""
+Edit_Cart_XPATH = """#entry_217850 > a"""
+Continue_Shopping_XPATH = """#content > div.buttons.d-flex > a.btn.btn-lg.btn-secondary.mr-auto"""
+Home_Title_XPATH = """#entry_213249 > h3.module-title"""
 
 # Initialize the PyUnitTestSetup fixture
 # setup = PyUnitTestSetup()
@@ -72,7 +70,7 @@ def login_to_website(driver):
 
     driver.get("https://ecommerce-playground.lambdatest.io/")
 
-    login_button = driver.find_element(By.XPATH, Login_XPATH) # Go to login page
+    login_button = driver.find_element(By.CSS_SELECTOR, Login_Selector) # Go to login page
     login_button.click()
 
     # select the relevant fields to log into the website
@@ -89,37 +87,6 @@ def login_to_website(driver):
     submit_button.click()
 
 class TestLoginPage(unittest.TestCase):
-    # def setUp(self):
-
-	# # load lambdaTest configurations
-    #     lt_options = setup_lt_options()
-        
-    #     username = os.environ.get("LT_USERNAME")
-    #     access_key = os.environ.get("LT_ACCESS_KEY")
-
-    #     # load browser configurations
-    #     options = ChromeOptions()
-    #     options.platform_name = "Windows 11"
-    #     options.set_capability('LT:Options', lt_options)
-
-    #     # Start the browser
-    #     gridURL = "https://{}:{}@hub.lambdatest.com/wd/hub".format(
-    #         username, access_key)
-            
-    #     driver = webdriver.Remote(
-    #         command_executor=gridURL,
-    #         options=options
-    #     )
-        
-    #     driver.implicitly_wait(30)
-    #     driver.maximize_window()
-
-    #     # Go to the app home page
-    #     driver.get("https://ecommerce-playground.lambdatest.io/")
-        
-        # test_setup.setUp()
-        # test_setup.browser.get("https://ecommerce-playground.lambdatest.io/")
-        # driver = test_setup.browser
 
     def test_login(self):
         '''
@@ -132,7 +99,7 @@ class TestLoginPage(unittest.TestCase):
 
         driver.get("https://ecommerce-playground.lambdatest.io/")
 
-        login_button = driver.find_element(By.XPATH, Login_XPATH) # Go to login page
+        login_button = driver.find_element(By.CSS_SELECTOR, Login_Selector) # Go to login page
         
         login_button.click()
 
@@ -150,7 +117,7 @@ class TestLoginPage(unittest.TestCase):
         submit_button.click()
 
         # Login success response
-        success_text = driver.find_element(By.XPATH, Login_Success_XPATH)
+        success_text = driver.find_element(By.CSS_SELECTOR, Login_Success_Selector)
 
         # check that the title is the same as displayed on the main page
         self.assertEqual(success_text.text, "My Account",
@@ -173,13 +140,13 @@ class TestLoginPage(unittest.TestCase):
 
         #Find logout button in the right panel of menu
         logout_button = driver.find_element(
-            By.XPATH, Logout_XPATH)
+            By.CSS_SELECTOR, Logout_Selector)
         
         # Click the submit button
         logout_button.click()
 
         # Logout success response
-        logout_text = driver.find_element(By.XPATH, Logout_Success_XPATH)
+        logout_text = driver.find_element(By.CSS_SELECTOR, Logout_Success_Selector)
         # assert if the Login button is displayed on the next page.
         self.assertEqual(logout_text.text, "Account Logout","Logout unsuccessful, No response provided from the site.")
 
@@ -190,38 +157,6 @@ class TestLoginPage(unittest.TestCase):
 
 
 class TestPlatform(unittest.TestCase):
-
-    # def setUp(self):
-
-    #     # load lambdaTest configurations
-    #     # load lambdaTest configurations
-    #     lt_options = setup_lt_options()
-        
-    #     username = os.environ.get("LT_USERNAME")
-    #     access_key = os.environ.get("LT_ACCESS_KEY")
-
-    #     # load browser configurations
-    #     options = ChromeOptions()
-    #     options.platform_name = "Windows 11"
-    #     options.set_capability('LT:Options', lt_options)
-
-    #     # Start the browser
-    #     gridURL = "https://{}:{}@hub.lambdatest.com/wd/hub".format(
-    #         username, access_key)
-            
-    #     driver = webdriver.Remote(
-    #         command_executor=gridURL,
-    #         options=options
-    #     )
-        
-    #     driver.implicitly_wait(30)
-    #     driver.maximize_window()
-
-        # # Go to the app home page
-        # setup.driver.get("https://ecommerce-playground.lambdatest.io/")
-
-        # # Login to the website by default
-        # login_to_website(setup.driver)
 
     def test_cart_badge_update(self):
         '''
@@ -235,7 +170,7 @@ class TestPlatform(unittest.TestCase):
         driver.get("https://ecommerce-playground.lambdatest.io/")
 
         #Going to Home page
-        home_button = driver.find_element(By.XPATH, Nav_to_Home_XPATH)
+        home_button = driver.find_element(By.CSS_SELECTOR, Nav_to_Home_Selector)
         home_button.click()
 
         #On hover, It provides option to add to cart
@@ -246,21 +181,15 @@ class TestPlatform(unittest.TestCase):
         ActionChains(driver).move_to_element(hover_item1).perform()
         
         WebDriverWait(driver, 3).until(
-            EC.visibility_of_all_elements_located((By.XPATH, Quick_View_XPATH ))
+            EC.visibility_of_all_elements_located((By.XPATH, Quick_View_XPATH))
         )
 
         add_to_cart = driver.find_element(By.XPATH, Add_to_Cart_XPATH)
 
-        # Wait for the cart to update (you may need to adjust the time based on your website)
         add_to_cart.click()
 
-        # WebDriverWait(driver, 3).until(
-        #     EC.text_to_be_present_in_element(
-        #         (By.XPATH, Cart_badge_XPATH), '1'))
 
-        # badge_count = driver.find_element(By.XPATH, Cart_badge_XPATH)
-        # document.getElementsByClassName('badge badge-pill badge-info cart-item-total')
-        badge_count = driver.find_elements(By.CLASS_NAME, Cart_bridge_locator)
+        badge_count = driver.find_elements(By.CLASS_NAME, Cart_badge_locator)
         # Check if any elements were found
         if badge_count:
             # Access the first element (index 0)
@@ -284,7 +213,7 @@ class TestPlatform(unittest.TestCase):
         driver.get("https://ecommerce-playground.lambdatest.io/")
 
         #Going to Home page
-        home_button = driver.find_element(By.XPATH, Nav_to_Home_XPATH)
+        home_button = driver.find_element(By.CSS_SELECTOR, Nav_to_Home_Selector)
         home_button.click()
 
        
@@ -305,18 +234,18 @@ class TestPlatform(unittest.TestCase):
         add_to_cart.click()
 
         #Close the notification
-        driver.find_element(By.XPATH, Close_Notification_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Close_Notification_Selector).click()
 
         #Click the shopping cart button
-        driver.find_element(By.XPATH, Cart_Button_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Cart_Button_Selector).click()
 
         WebDriverWait(driver, 3).until(
      EC.text_to_be_present_in_element(
-            (By.XPATH, Cart_Element_Item_XPATH ), 'HTC Touch HD')
+            (By.CSS_SELECTOR, Cart_Element_Item_Selector ), 'HTC Touch HD')
         )
 
         #Extract the item name from the cart
-        item_name = driver.find_element(By.XPATH, Cart_Element_Item_XPATH).text
+        item_name = driver.find_element(By.CSS_SELECTOR, Cart_Element_Item_Selector).text
 
         self.assertEqual(item_name, "HTC Touch HD",
                          "Added item not found in cart")
@@ -341,7 +270,7 @@ class TestPlatform(unittest.TestCase):
         driver.get("https://ecommerce-playground.lambdatest.io/")
 
         #Going to Home page
-        home_button = driver.find_element(By.XPATH, Nav_to_Home_XPATH)
+        home_button = driver.find_element(By.CSS_SELECTOR, Nav_to_Home_Selector)
         home_button.click()
 
        
@@ -353,7 +282,7 @@ class TestPlatform(unittest.TestCase):
         ActionChains(driver).move_to_element(hover_item1).perform()
         
         WebDriverWait(driver, 3).until(
-            EC.visibility_of_all_elements_located((By.XPATH, Quick_View_XPATH ))
+            EC.visibility_of_all_elements_located((By.XPATH, Quick_View_XPATH))
         )
 
         add_to_cart = driver.find_element(By.XPATH, Add_to_Cart_XPATH)
@@ -363,19 +292,19 @@ class TestPlatform(unittest.TestCase):
 
 
         #Close the notification
-        driver.find_element(By.XPATH, Close_Notification_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Close_Notification_Selector).click()
 
         #Click the shopping cart button
-        driver.find_element(By.XPATH, Cart_Button_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Cart_Button_Selector).click()
         
         #Go to Edit cart option
-        driver.find_element(By.XPATH, Edit_Cart_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Edit_Cart_XPATH).click()
         
         #Go to continue shopping option
-        driver.find_element(By.XPATH, Continue_Shopping_XPATH).click()
+        driver.find_element(By.CSS_SELECTOR, Continue_Shopping_XPATH).click()
 
         #Extract the text from the main page
-        product_title = driver.find_element(By.XPATH, Home_Title_XPATH)
+        product_title = driver.find_element(By.CSS_SELECTOR, Home_Title_XPATH)
 
         # check that the title is the same as displayed on the main page
         self.assertEqual(product_title.text, "TOP TRENDING CATEGORIES",
@@ -386,5 +315,3 @@ class TestPlatform(unittest.TestCase):
 
         setup.tearDown()
 
-#     def tearDown(self):
-#         driver.quit()
